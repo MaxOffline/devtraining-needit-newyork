@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_script_client">
+    <sys_script_client action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <applies_extended>false</applies_extended>
+        <condition/>
+        <description/>
+        <field>u_request_type</field>
+        <global>true</global>
+        <isolate_script>true</isolate_script>
+        <messages/>
+        <name>NeedIt Request Type Options</name>
+        <order/>
+        <script><![CDATA[var originalListItems = [];
+var changed = false;
+var retrieveElements = g_form.getControl("u_what_needed");
+var whatNeededRelatedChoices = [];
+
+function onChange(control, oldValue, newValue, isLoading, isTemplate) {
+	if (isLoading || newValue === '') {
+		return;
+	}
+// 		Store the original Elements after retrival in only if they were never another item selected before.
+	if (!changed) {
+		for (var index = 0; index < retrieveElements.length; index++){
+			originalListItems.push(retrieveElements[index]);
+		}
+	}
+	updateDropDown(newValue);
+}
+
+function updateDropDown(newValue){
+	for (var index = 0; index < originalListItems.length; index++){
+		if ( originalListItems[index].value.includes(newValue)){
+			whatNeededRelatedChoices.push(originalListItems[index]);
+		}
+	}
+	g_form.clearOptions("u_what_needed");
+
+	for (var i = 0; i < whatNeededRelatedChoices.length; i++) {
+		g_form.addOption(
+			"u_what_needed",
+			String(whatNeededRelatedChoices[i].value),
+			String(whatNeededRelatedChoices[i].innerText)
+		);
+	}
+	whatNeededRelatedChoices = [];
+}]]></script>
+        <sys_class_name>sys_script_client</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2020-02-07 15:25:18</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>b1b7d1821bb24010c95ced3abc4bcb56</sys_id>
+        <sys_mod_count>96</sys_mod_count>
+        <sys_name>NeedIt Request Type Options</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="NeedIt" source="x_58872_needit">6ead8e780f603200cd674f8ce1050ed1</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="NeedIt">6ead8e780f603200cd674f8ce1050ed1</sys_scope>
+        <sys_update_name>sys_script_client_b1b7d1821bb24010c95ced3abc4bcb56</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2020-02-07 19:17:18</sys_updated_on>
+        <table>x_58872_needit_needit</table>
+        <type>onChange</type>
+        <ui_type>0</ui_type>
+        <view/>
+    </sys_script_client>
+</record_update>
